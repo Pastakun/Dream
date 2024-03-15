@@ -1,5 +1,5 @@
 FROM node:14
-WORKDIR /app
+WORKDIR ./
 COPY package*.json ./
 RUN npm install
 ENV PORT 8080
