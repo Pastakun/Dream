@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
@@ -40,4 +41,5 @@ io.on('connection', (socket) => {
 server.listen(8080, () => {
   console.log('Server is running on port 8080');
 });
+*/
 console.log('test');
