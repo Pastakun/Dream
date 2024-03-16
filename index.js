@@ -1,42 +1,42 @@
-const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
-const path = require('path');
+import express from 'express';
+import http from 'http';
+import { Server as WebSocketServer } from 'ws';
+import path from 'path';
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const wss = new WebSocketServer({ server });
 
 const chatdata = [];
+
 app.use(express.static('public'));
+
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
+
 app.get('/getchat', (req, res) => {
   res.send(chatdata);
 });
 
-io.on('connection', (socket) => {
-  console.log('connect');
+wss.on('connection', (ws) => {
+  console.log('WebSocket connected');
 
-  socket.on('send', (json) => {
+  ws.on('message', (message) => {
+    const json = JSON.parse(message);
     chatdata.push(json);
     if (chatdata.length > 200) {
       chatdata.shift();
     }
 
-    io.emit('message', json);
-  });
-
-  socket.on('livesend', (json) => {
-    io.emit('livemessage', json);
-  });
-
-  socket.on('socket', (json) => {
-    io.emit('socket', json);
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocketServer.OPEN) {
+        client.send(JSON.stringify(json));
+      }
+    });
   });
 });
 
 server.listen(8080, () => {
-  console.log('Server is running on port 3000');
+  console.log('Server is running on port 8080');
 });
