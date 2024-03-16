@@ -1,7 +1,7 @@
-import express from 'express'
-import http from 'http'
-import socketIO from 'socket.io'
-import path from 'path'
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
