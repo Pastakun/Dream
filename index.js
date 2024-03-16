@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import { WebSocketServer } from 'ws';
 import path from 'path';
-const __dirname = new URL(import.meta.url).pathname
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const server = http.createServer(app);
