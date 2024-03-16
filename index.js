@@ -34,7 +34,7 @@ wss.on('connection', (ws) => {
 
     wss.clients.forEach((client) => {
       console.log('test');
-      if (client.readyState === WebSocketServer.OPEN) {
+      if (client.readyState === 1) {
         client.send(JSON.stringify(json));
       }
     });
