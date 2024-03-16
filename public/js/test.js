@@ -31,16 +31,15 @@ function addchat (usernamevalue, messagevalue) {
     chatscroll.scrollTo(0, chatscroll.scrollHeight);
 }
 function connect(){
-    socket = io();
-    socket.on('connect',function() {
+    socket = new WebSocket('wss://pascha.onrender.com/');
+    socket.addEventListener("open", (event) => {
     });
-    socket.on('message',function(e) {
-      if(e.id !== id){
-        addchat(e.username, e.data);
-        music.play();
-      }
-        
-    });
+    socket.addEventListener("message", (event) => {
+        if(event.id !== id){
+            addchat(event.username, event.data);
+            music.play();
+        }
+    }); 
 }
 connect();
 function send(){
@@ -48,7 +47,7 @@ function send(){
       if(text.value === 'うほ'){
         alert('使用できない単語が含まれています。ちゃんと挨拶しろや');
       }else{
-      socket.emit('send', { 'data': text.value, 'username': username, 'id': id});
+      socket.send({ 'data': text.value, 'username': username, 'id': id});
       addchat(username, text.value);
       text.value = '';
       }
