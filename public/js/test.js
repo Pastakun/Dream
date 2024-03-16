@@ -47,7 +47,7 @@ function send(){
       if(text.value === 'うほ'){
         alert('使用できない単語が含まれています。ちゃんと挨拶しろや');
       }else{
-      socket.send({ 'data': text.value, 'username': username, 'id': id});
+      socket.send(JSON.stringify({ 'data': text.value, 'username': username, 'id': id}));
       addchat(username, text.value);
       text.value = '';
       }
