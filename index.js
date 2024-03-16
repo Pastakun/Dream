@@ -1,6 +1,6 @@
 import express from 'express';
 import http from 'http';
-import { Server as WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws';
 import path from 'path';
 
 const app = express();
