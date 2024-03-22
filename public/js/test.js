@@ -35,8 +35,9 @@ function connect(){
     socket.addEventListener("open", (event) => {
     });
     socket.addEventListener("message", (event) => {
-        if(event.id !== id){
-            addchat(event.username, event.data);
+        let eventjson = JSON.parse(event)
+        if(eventjson.id !== id){
+            addchat(eventjson.username, eventjson.data);
             music.play();
         }
     }); 
