@@ -110,8 +110,8 @@ document.addEventListener('click', function(e) {
                         requestAnimationFrame(canvasset);
                     }
                     canvasset();
-                    const socket = io();
-                    socket.on('connect',function() {
+                    const socket = new WebSocket('wss://pascha.onrender.com/');
+                    socket.addEventListener("open", (event) => {
                         const interval = setInterval(function() {
                             socket.emit('livesend', { 'message': canvas.toDataURL('image/jpeg')});
                         }, 100);
@@ -122,9 +122,9 @@ document.addEventListener('click', function(e) {
                     chatscroll.appendChild(canvas);
                     const canvascontext = canvas.getContext('2d');
                     const image = new Image();
-                    const socket = io();
-                    socket.on('livemessage',function(e) {
-                        image.src = e.message;
+                    const socket = new WebSocket('wss://pascha.onrender.com/');
+                    socket.addEventListener("open", (event) => {
+                        image.src = event.message;
                         image.onload = function() {
                             canvascontext.clearRect(0, 0, canvas.width, canvas.height);
                             canvascontext.drawImage(image, 0, 0, canvas.width, canvas.width / 2);
