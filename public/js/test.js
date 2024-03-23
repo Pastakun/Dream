@@ -110,10 +110,10 @@ document.addEventListener('click', function(e) {
                         requestAnimationFrame(canvasset);
                     }
                     canvasset();
-                    const socket = new WebSocket('wss://pascha.onrender.com/');
+                    const socket = new WebSocket('wss://pascha.onrender.com/live');
                     socket.addEventListener("open", (event) => {
                         const interval = setInterval(function() {
-                            socket.emit('livesend', { 'message': canvas.toDataURL('image/jpeg')});
+                            socket.send('livesend', { 'message': canvas.toDataURL('image/jpeg')});
                         }, 100);
                     });
                     text.value += `<button onclick = "const chatscroll = document.getElementsByClassName('chatscroll')[0];
